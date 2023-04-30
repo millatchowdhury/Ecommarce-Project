@@ -43,30 +43,47 @@
 						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend') }}/images/phone.png" alt=""></div>+38 068 005 3570</div>
 						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend') }}/images/mail.png" alt=""></div><a href="mailto:fastsales@gmail.com">millatchowdhury@gmail.com</a></div>
 						<div class="top_bar_content ml-auto">
+							@if (Auth::check())
+								<div class="standard_dropdown top_bar_dropdown">
+									<li>
+										<a href="#">{{Auth::user()->name}} <i class="fas fa-chevron-down"></i> </a>	
+										<ul style="width:200px;">
+											<li><a href="#">profile</a></li>
+											<li><a href="#">Setting</a></li>
+											<li><a href="#">Order list</a></li>
+											<li><a href="{{route('customer.logout')}}">Logout</a></li>
+										</ul>
+									</li>	
+								</div>	
+							@endif
+							@guest
 							<div class="top_bar_menu">
 								<ul class="standard_dropdown top_bar_dropdown">
 									<li>
-										<a href="#">English<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="#">English</a></li>
-											<li><a href="#">Bangla</a></li>
-											
-										</ul>
-									</li>
-									<li>
-										<a href="#">Currency<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="#">Taka (৳)</a></li>
-											<li><a href="#">Dollar ($)</a></li>
+										<a href="#">Login<i class="fas fa-chevron-down"></i></a>
+										<ul style="width: 300px;">
+											<div>
+												<br>
+												<form action="{{route('login')}}" method="POST">
+													@csrf
+													<div class="form-group">
+														<label>Email Address</label>
+														<input type="email" class="form-control" name="email" autocomplete="off" required>
+													</div>
+													<div class="form-group">
+														<label>Password</label>
+														<input type="password" class="form-control" name="password" required>
+													</div>
+													<div class="form-group">
+														<button type="submit" class="btn btn-sm btn-info">login</button>
+													</div>
+												</form>
+											</div>
 										</ul>
 									</li>
 								</ul>
 							</div>
-							<div class="top_bar_user">
-								<div class="user_icon"><img src="{{ asset('public/frontend') }}/images/user.svg" alt=""></div>
-								<div><a href="#">Register</a></div>
-								<div><a href="#">Sign in</a></div>
-							</div>
+							@endguest
 						</div>
 					</div>
 				</div>
@@ -82,7 +99,7 @@
 					<!-- Logo -->
 					<div class="col-lg-2 col-sm-3 col-3 order-1">
 						<div class="logo_container">
-							<div class="logo"><a href="#">MCTECH</a></div>
+							<div class="logo"><a href="{{url('/')}}">MCTECH</a></div>
 						</div>
 					</div>
 

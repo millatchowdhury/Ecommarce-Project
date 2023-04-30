@@ -95,7 +95,7 @@ class ProductController extends Controller
                       ->addColumn('action', function($row){
                           $actionbtn='
                           <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                          <a href="#" class="btn btn-info btn-sm edit"><i class="fas fa-edit"></i></a> 
+                          <a href="'.route('product.edit', [$row->id]).'" class="btn btn-info btn-sm edit"><i class="fas fa-edit"></i></a> 
                           <a href="'.route('product.delete', [$row->id]).'" class="btn btn-danger btn-sm" id="delete"><i class="fas fa-trash"></i>
                           </a>';
         
@@ -251,7 +251,19 @@ class ProductController extends Controller
      }
 
 
+     public function edit($id){
+        $product=DB::table('products')->where('id',$id)->first();
+        //$product=Product::findorfail($id);
+        $category=Category::all();
+        $brand=Brand::all();
+        $warehouse=DB::table('warehouses')->get();
+        $pickup_point=DB::table('pickup_point')->get();
+         //childcategory get_
+        $childcategory=DB::table('childcategories')->where('category_id',$product->category_id)->get();
+        // dd($childcategory);
+        return view('admin.product.edit',compact('product','category','brand','warehouse','pickup_point','childcategory'));
 
+     }
 
 
 
