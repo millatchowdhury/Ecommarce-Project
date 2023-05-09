@@ -230,7 +230,7 @@
 
                      <div class="card p-4">
                         <h6>Trendy Product</h6>
-                       <input type="checkbox" name="trendy" value="1"  data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                       <input type="checkbox" name="trendy_product" value="1"  data-bootstrap-switch data-off-color="danger" data-on-color="success">
                      </div>
 
                      <div class="card p-4">

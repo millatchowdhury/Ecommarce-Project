@@ -23,6 +23,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/responsive.css">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/product_styles.css">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/product_responsive.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('public/backend/plugins/toastr/toastr.css') }}">
 
 </head>
 
@@ -74,12 +75,26 @@
 														<label>Password</label>
 														<input type="password" class="form-control" name="password" required>
 													</div>
+													<div class="row mb-3">
+														<div class="offset-md-2">
+															<div class="form-check">
+																<input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+							
+																<label class="form-check-label" for="remember">
+																	{{ __('Remember Me') }}
+																</label>
+															</div>
+														</div>
+													</div>
 													<div class="form-group">
 														<button type="submit" class="btn btn-sm btn-info">login</button>
 													</div>
 												</form>
 											</div>
 										</ul>
+									</li>
+									<li>
+										<a href="{{route('register')}}">Register <i class="fas fa-chevron-down"></i> </a>
 									</li>
 								</ul>
 							</div>
@@ -130,7 +145,9 @@
 							</div>
 						</div>
 					</div>
-
+					@php
+						$wishlist = DB::table('wishlists')->where('user_id', Auth::id())->count();
+					@endphp
 					<!-- Wishlist -->
 					<div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
 						<div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
@@ -138,7 +155,7 @@
 								<div class="wishlist_icon"><img src="{{ asset('public/frontend') }}/images/heart.png" alt=""></div>
 								<div class="wishlist_content">
 									<div class="wishlist_text"><a href="#">Wishlist</a></div>
-									<div class="wishlist_count">115</div>
+									<div class="wishlist_count">{{$wishlist}}</div>
 								</div>
 							</div>
 
@@ -255,7 +272,7 @@
 					
 					<div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
 						<div class="copyright_content"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="" target="_blank">Millat Chowdhury</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 </div>
 						<div class="logos ml-sm-auto">
@@ -286,6 +303,30 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{{ asset('public/frontend') }}/plugins/easing/easing.js"></script>
 <script src="{{ asset('public/frontend') }}/js/custom.js"></script>
 <script src="{{ asset('public/frontend') }}/js/product_custom.js"></script>
+<script type="text/javascript" src="{{ asset('public/backend/plugins/toastr/toastr.min.js') }}"></script>
+
+<script>
+	@if(Session::has('messege'))
+	  var type="{{Session::get('alert-type','info')}}"
+	  switch(type){
+		  case 'info':
+			   toastr.info("{{ Session::get('messege') }}");
+			   break;
+		  case 'success':
+			  toastr.success("{{ Session::get('messege') }}");
+			  break;
+		  case 'warning':
+			 toastr.warning("{{ Session::get('messege') }}");
+			  break;
+		  case 'error':
+			  toastr.error("{{ Session::get('messege') }}");
+			  break;
+			}
+	@endif
+  </script>
+
+
+
 </body>
 
 </html>
